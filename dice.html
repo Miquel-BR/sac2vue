@@ -445,6 +445,11 @@
             theAction.canUseProSkill = $('proSkill').checked;
             theAction.doUseProSkill = false;
 
+            var smallSequance = new fullSequence();
+            smallSequance.addAction(theAction);
+            rr = smallSequance.getProbaReroll2(false);
+            console.log("ACC", Math.round(rr*100000)/1000);
+
             theSequence.addAction(theAction);
 
             showResult();

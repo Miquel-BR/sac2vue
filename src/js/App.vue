@@ -2,7 +2,6 @@
     <form id="sac" name="sac">
         <div id="maincontent">
             <h1>Samba Action Calculator</h1>
-
             <!-- PLAYER -->
             <div class="player" >
                 <h2>Player</h2>
