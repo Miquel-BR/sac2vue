@@ -1,0 +1,118 @@
+@charset "utf-8";
+
+// Import a Google Font
+//@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+//@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;900');
+
+// Set your brand colors
+$purple: #8A4D76;
+$pink: #FA7C91;
+$brown: #757763;
+$beige-light: #D0D1CD;
+$beige-lighter: #EFF0EB;
+$text :#363636;
+
+$fons: #111;
+$fore: #555;
+$high: #878787;
+$select: #999;
+$hover: #1E1E1C;
+$blau:  #1D71B8;
+
+$grisMenu: #262626;
+$grisDesplegalbe: #3C3C3B;
+$popup: #1D1d1B;
+
+// Update Bulma's global variables
+$family-sans-serif: "Source Sans Pro", sans-serif;
+$weight-bold: 900;
+
+$grey-dark: $brown;
+$grey-light: $beige-light;
+$primary: $purple;
+$link: #000; //$pink;
+
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
+// Update some of Bulma's component variables
+$body-background-color: $beige-lighter;
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+//$navbar-height: 1px;
+
+//MODAL
+$modal-z: 1100;
+$modal-content-width: 90%;
+$modal-background-background-color: rgba(255, 255, 255, 0.80);
+
+//TABS
+$tabs-link-active-border-bottom-color: #C60C30;
+$tabs-border-bottom-width: 1px;
+
+$colores: #4B92C3,
+#FFCE3A,
+#96B297,
+#EB8032,
+#C0A6D8,
+#7FC57F,
+#67C4CF,
+#FE5BAC,
+#BBBB47,
+#F0494F,
+#CBCBCB,
+#B38557;
+
+$colores-disabled: #999999;
+.progress.iss-0::-webkit-progress-value {
+    background-color: $colores-disabled;
+}
+.progress.iss-0::-moz-progress-bar {
+    background-color:$colores-disabled;
+}
+.progress.iss-0::-ms-fill {
+    background-color:$colores-disabled;
+}
+
+@for $i from 1 through length($colores) {
+    .progress.iss-#{$i}::-webkit-progress-value {
+        background-color: nth($colores, $i);
+    }
+    .progress.iss-#{$i}::-moz-progress-bar {
+        background-color:nth($colores, $i);
+    }
+    .progress.iss-#{$i}::-ms-fill {
+        background-color:nth($colores, $i);
+    }
+}
+
+
+
+
+
+//@import "../../node_modules/bulma/bulma.sass";
+
+// Import only what you need from Bulma
+@import "../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../node_modules/bulma/sass/base/_all.sass";
+@import "../../node_modules/bulma/sass/elements/_all";
+@import "../../node_modules/bulma/sass/form/_all.sass";
+@import "../../node_modules/bulma/sass/components/_all.sass";
+
+//@import "../../node_modules/bulma/sass/elements/button.sass";
+//@import "../../node_modules/bulma/sass/elements/container.sass";
+//@import "../../node_modules/bulma/sass/grid/tiles.sass";
+//@import "../../node_modules/bulma/sass/elements/form.sass";
+//@import "../../node_modules/bulma/sass/elements/title.sass";
+//@import "../../node_modules/bulma/sass/elements/icon.sass";
+@import "../../node_modules/bulma/sass/layout/hero.sass";
+//@import "../../node_modules/bulma/sass/layout/section.sass";
+@import "../../node_modules/bulma/sass/grid/columns.sass";
+//@import "../../node_modules/bulma/sass/components/panel.sass";
+//@import "../../node_modules/bulma/sass/elements/progress.sass";
+
+//@import "../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+//@import "../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+
