@@ -65,29 +65,6 @@ $colores: #4B92C3,
 #CBCBCB,
 #B38557;
 
-$colores-disabled: #999999;
-.progress.iss-0::-webkit-progress-value {
-    background-color: $colores-disabled;
-}
-.progress.iss-0::-moz-progress-bar {
-    background-color:$colores-disabled;
-}
-.progress.iss-0::-ms-fill {
-    background-color:$colores-disabled;
-}
-
-@for $i from 1 through length($colores) {
-    .progress.iss-#{$i}::-webkit-progress-value {
-        background-color: nth($colores, $i);
-    }
-    .progress.iss-#{$i}::-moz-progress-bar {
-        background-color:nth($colores, $i);
-    }
-    .progress.iss-#{$i}::-ms-fill {
-        background-color:nth($colores, $i);
-    }
-}
-
 
 
 
@@ -96,19 +73,19 @@ $colores-disabled: #999999;
 
 // Import only what you need from Bulma
 @import "../../node_modules/bulma/sass/utilities/_all.sass";
-@import "../../node_modules/bulma/sass/base/_all.sass";
-@import "../../node_modules/bulma/sass/elements/_all";
-@import "../../node_modules/bulma/sass/form/_all.sass";
-@import "../../node_modules/bulma/sass/components/_all.sass";
+//@import "../../node_modules/bulma/sass/base/_all.sass";
+//@import "../../node_modules/bulma/sass/elements/_all";
+//@import "../../node_modules/bulma/sass/form/_all.sass";
+//@import "../../node_modules/bulma/sass/components/_all.sass";
 
 //@import "../../node_modules/bulma/sass/elements/button.sass";
-//@import "../../node_modules/bulma/sass/elements/container.sass";
-//@import "../../node_modules/bulma/sass/grid/tiles.sass";
+@import "../../node_modules/bulma/sass/elements/container.sass";
+@import "../../node_modules/bulma/sass/grid/tiles.sass";
 //@import "../../node_modules/bulma/sass/elements/form.sass";
 //@import "../../node_modules/bulma/sass/elements/title.sass";
 //@import "../../node_modules/bulma/sass/elements/icon.sass";
-@import "../../node_modules/bulma/sass/layout/hero.sass";
-//@import "../../node_modules/bulma/sass/layout/section.sass";
+//@import "../../node_modules/bulma/sass/layout/hero.sass";
+@import "../../node_modules/bulma/sass/layout/section.sass";
 @import "../../node_modules/bulma/sass/grid/columns.sass";
 //@import "../../node_modules/bulma/sass/components/panel.sass";
 //@import "../../node_modules/bulma/sass/elements/progress.sass";
