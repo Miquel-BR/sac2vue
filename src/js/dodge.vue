@@ -1,20 +1,21 @@
 <template>
     <div class="actionCluster container">
         <h2>Dodges</h2>
-        <div class="columns is-mobile">
-            <div class="column" v-for="n in numbers" @click="action(n)">{{n}}+</div>
-        </div>
+        <teclat :numbers="numbers" :color="'#0CFFC2'" @selected="action"></teclat>
     </div>
 </template>
 
 <script>
 
 import {dodge} from "./actions";
+import Teclat from './teclat.vue'
 
 export default {
     name: "dodge",
     props: ['dodgeSkill', 'lonerSkill'],
-    components: {},
+    components: {
+        Teclat
+    },
     data:function(){
         return {
             numbers: [2, 3, 4, 5, 6 ]

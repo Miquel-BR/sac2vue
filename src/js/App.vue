@@ -39,16 +39,22 @@
     </section>
     <section class="section">
         <div class="container">
-            <dodge :loner-skill="lonerSkill" :dodge-skill="dodgeSkill" @action="addAction"></dodge>
-
-            <pickup :loner-skill="lonerSkill" :surehand-skill="surehandSkill" @action="addAction"></pickup>
-
-            <gfi :lonner-skill="lonerSkill" :surefeet-skill="surefeetSkill" @action="addAction"></gfi>
-
-
+            <div class="columns is-mobile">
+                <div class="column">
+                    <dodge :loner-skill="lonerSkill" :dodge-skill="dodgeSkill" @action="addAction"></dodge>
+                </div>
+                <div class="column">
+                    <pickup :loner-skill="lonerSkill" :surehand-skill="surehandSkill" @action="addAction"></pickup>
+                </div>
+                <div class="column">
+                    <gfi :lonner-skill="lonerSkill" :surefeet-skill="surefeetSkill" @action="addAction"></gfi>
+                </div>
+                <div class="column">
+                    <catch :catch-skill="catchSkill" :loner-skill="lonerSkill" @action="addAction"></catch>
+                </div>
+            </div>
             <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
 
-            <catch :catch-skill="catchSkill" :loner-skill="lonerSkill" @action="addAction"></catch>
 
             <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
 
@@ -158,7 +164,7 @@ import Injury from './injury.vue'
 
 html{
     @include from($tablet) {
-        overflow-y: hidden !important;
+        //overflow-y: hidden !important;
     }
     scroll-behavior: smooth;
 

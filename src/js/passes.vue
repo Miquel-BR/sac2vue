@@ -1,11 +1,7 @@
 <template>
     <div class="actionCluster">
         <h2>Passes</h2>
-        <input type="button" value="pass 2+ " @click="addAction('pass2')"/>
-        <input type="button" value="pass 3+ " @click="addAction('pass3')"/>
-        <input type="button" value="pass 4+ " @click="addAction('pass4')"/>
-        <input type="button" value="pass 5+ " @click="addAction('pass5')"/>
-        <input type="button" value="pass 6+ " @click="addAction('pass6')"/>
+        <teclat :numbers="numbers" :color="'#CC32FF'" @selected="action"></teclat>
         <br/>
         <b>Interception **:</b>
         <input class="interception" type="radio" value="interception No" checked="checked" name="interception" id="interceptionNo" />
@@ -34,39 +30,27 @@
 <script>
 
 import {pass} from "./actions";
+import Teclat from "./teclat.vue";
 
 export default {
     name: "passes",
     props: ['passSkill', 'lonerSkill'],
-    components: {},
+    components: {
+        Teclat
+    },
     data:function(){
         return {
             interception: "0",
             interceptionWithPro: false,
-            interceptionWithCatch: false
+            interceptionWithCatch: false,
+            numbers: [2, 3, 4, 5, 6 ]
         }
     },
     computed: {},
     watch: {},
     methods: {
-        addAction: function(action){
-            switch(action) {
-                case 'pass2':
-                    var theAction = new pass(2, this.passSkill, this.lonerSkill, this.interception, this.interceptionWithPro, this.interceptionWithCatch );
-                    break;
-                case 'pass3':
-                    var theAction = new pass(3,  this.passSkill, this.lonerSkill, this.interception, this.interceptionWithPro, this.interceptionWithCatch );
-                    break;
-                case 'pass4':
-                    var theAction = new pass(4,  this.passSkill, this.lonerSkill, this.interception, this.interceptionWithPro, this.interceptionWithCatch );
-                    break;
-                case 'pass5':
-                    var theAction = new pass(5,  this.passSkill, this.lonerSkill, this.interception, this.interceptionWithPro, this.interceptionWithCatch );
-                    break;
-                case 'pass6':
-                    var theAction = new pass(6,  this.passSkill, this.lonerSkill, this.interception, this.interceptionWithPro, this.interceptionWithCatch );
-                    break;
-            }
+        action: function(val){
+            var theAction = new pass(val, this.passSkill, this.lonerSkill, this.interception, this.interceptionWithPro, this.interceptionWithCatch );
             this.$emit('action', theAction);
         }
     },

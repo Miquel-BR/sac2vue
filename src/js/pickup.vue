@@ -1,46 +1,32 @@
 <template>
     <div class="actionCluster">
         <h2>Pick-up</h2>
-        <input type="button" value="Pick-up 2+ " @click="addAction('pickup2')"/>
-        <input type="button" value="Pick-up 3+ " @click="addAction('pickup3')"/>
-        <input type="button" value="Pick-up 4+ " @click="addAction('pickup4')"/>
-        <input type="button" value="Pick-up 5+ " @click="addAction('pickup5')"/>
-        <input type="button" value="Pick-up 6+ " @click="addAction('pickup6')"/>
+        <teclat :numbers="numbers" :color="'#32A6FF'" @selected="action"></teclat>
     </div>
 </template>
 
 <script>
 
 import {pickup} from "./actions";
+import Teclat from './teclat.vue'
+
 
 export default {
     name: "pickup",
     props: ['surehandSkill', 'lonerSkill'],
-    components: {},
+    components: {
+        Teclat
+    },
     data:function(){
-        return {}
+        return {
+            numbers: [2, 3, 4, 5, 6 ]
+        }
     },
     computed: {},
     watch: {},
     methods: {
-        addAction: function(action){
-            switch(action) {
-                case 'pickup2':
-                    var theAction = new pickup(2, this.surehandSkill, this.lonerSkill );
-                    break;
-                case 'pickup3':
-                    var theAction = new pickup(3, this.surehandSkill, this.lonerSkill );
-                    break;
-                case 'pickup4':
-                    var theAction = new pickup(4, this.surehandSkill, this.lonerSkill );
-                    break;
-                case 'pickup5':
-                    var theAction = new pickup(5, this.surehandSkill, this.lonerSkill );
-                    break;
-                case 'pickup6':
-                    var theAction = new pickup(6, this.surehandSkill, this.lonerSkill );
-                    break;
-            }
+        action: function(val){
+            var theAction = new pickup(val, this.surehandSkill, this.lonerSkill );
             this.$emit('action', theAction);
         }
     },
@@ -52,6 +38,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 
 </style>

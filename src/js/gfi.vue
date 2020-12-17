@@ -1,34 +1,31 @@
 <template>
     <div class="actionCluster">
         <h2>Go For It</h2>
-        <input type="button" value="gfi 2+ " @click="addAction('gfi2')"/>
-        <input style="width:120px" type="button" value="gfi 3+ (blizzard)" @click="addAction('gfi3')"/>
+        <teclat :numbers="numbers" :color="'#F25454'" @selected="action"></teclat>
     </div>
 </template>
 
 <script>
 
 import {gfi} from "./actions";
+import Teclat from "./teclat.vue";
 
 export default {
     name: "gfi",
     props: ['surefeetSkill', 'lonerSkill'],
-    components: {},
+    components: {
+        Teclat
+    },
     data:function(){
-        return {}
+        return {
+            numbers: [2, 3 ]
+        }
     },
     computed: {},
     watch: {},
     methods: {
-        addAction: function(action){
-            switch(action) {
-                case 'gfi2':
-                    var theAction = new gfi(2, this.surefeetSkill, this.lonerSkill);
-                    break;
-                case 'gfi3':
-                    var theAction = new gfi(3, this.surefeetSkill, this.lonerSkill);
-                    break;
-            }
+        action: function(val){
+            var theAction = new gfi(val, this.surefeetSkill, this.lonerSkill);
             this.$emit('action', theAction);
         }
     },
@@ -40,6 +37,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 
 </style>

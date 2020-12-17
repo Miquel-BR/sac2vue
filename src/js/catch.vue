@@ -1,46 +1,32 @@
 <template>
     <div class="actionCluster">
         <h2>Catch</h2>
-        <input type="button" value="catch 2+ " @click="addAction('catch2')"/>
-        <input type="button" value="catch 3+ " @click="addAction('catch3')"/>
-        <input type="button" value="catch 4+ " @click="addAction('catch4')"/>
-        <input type="button" value="catch 5+ " @click="addAction('catch5')"/>
-        <input type="button" value="catch 6+ " @click="addAction('catch6')"/>
+        <teclat :numbers="numbers" :color="'#FF26A8'" @selected="action"></teclat>
     </div>
 </template>
 
 <script>
 
 import {catching} from "./actions";
+import Teclat from './teclat.vue'
+
 
 export default {
     name: "catch",
     props: ['catchSkill', 'lonerSkill'],
-    components: {},
+    components: {
+        Teclat
+    },
     data:function(){
-        return {}
+        return {
+            numbers: [2, 3, 4, 5, 6 ]
+        }
     },
     computed: {},
     watch: {},
     methods: {
-        addAction: function(action){
-            switch(action) {
-                case 'catch2':
-                    var theAction = new catching(2, this.catchSkill, this.lonerSkill );
-                    break;
-                case 'catch3':
-                    var theAction = new catching(3,  this.catchSkill, this.lonerSkill );
-                    break;
-                case 'catch4':
-                    var theAction = new catching(4,  this.catchSkill, this.lonerSkill );
-                    break;
-                case 'catch5':
-                    var theAction = new catching(5,  this.catchSkill, this.lonerSkill );
-                    break;
-                case 'catch6':
-                    var theAction = new catching(6,  this.catchSkill, this.lonerSkill );
-                    break;
-            }
+        action: function(val){
+            var theAction = new catching(val, this.catchSkill, this.lonerSkill );
             this.$emit('action', theAction);
         }
     },
