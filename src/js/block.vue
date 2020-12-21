@@ -15,7 +15,7 @@
         <b>Success</b>
         <br/><br/>
         <div class="columns">
-            <div class="column pow"></div>
+            <div class="column bbfont">g</div>
         </div>
         <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessSkull" value="blockSuccessSkull" v-model="success"/><label for="blockSuccessSkull"><img src="img/skull.jpg" alt="skull"/></label>
         <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessPowSkull" value="blockSuccessPowSkull" v-model="success"/><label for="blockSuccessPowSkull"><img src="img/powskull.jpg" alt="powskull"/></label>
