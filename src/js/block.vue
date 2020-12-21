@@ -4,14 +4,19 @@
         <b>Dice</b>
         <br/>
         <br/>
-        <input type="radio" name="nbDice" class="nbDice" id="nbDiceM3" value="-3" v-model="dice"/><label for="nbDiceM3">-3D</label>
-        <input type="radio" name="nbDice" class="nbDice" id="nbDiceM2" value="-2" v-model="dice"/><label for="nbDiceM2">-2D</label>
-        <input type="radio" name="nbDice" class="nbDice" id="nbDice1" value="1" v-model="dice"/><label for="nbDice1">1D</label>
-        <input type="radio" name="nbDice" class="nbDice" id="nbDice2" value="2" v-model="dice"/><label for="nbDice2">2D</label>
-        <input type="radio" name="nbDice" class="nbDice" id="nbDice3" value="3" v-model="dice"/><label for="nbDice3">3D</label>
+        <div class="columns">
+            <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''">-&nbsp;<span class="bbfont">6&nbsp;6&nbsp;6</span></div>
+            <div class="column" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''">-&nbsp;<span class="bbfont">6&nbsp;6</span></div>
+            <div class="column" @click="daus(1)" :class="(dice == 1) ? 'selected' : ''"><span class="bbfont">6</span></div>
+            <div class="column" @click="daus(2)" :class="(dice == 2) ? 'selected' : ''"><span class="bbfont">6&nbsp;6</span></div>
+            <div class="column" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">6&nbsp;6&nbsp;6</span></div>
+        </div>
         <br/><br/>
         <b>Success</b>
         <br/><br/>
+        <div class="columns">
+            <div class="column pow"></div>
+        </div>
         <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessSkull" value="blockSuccessSkull" v-model="success"/><label for="blockSuccessSkull"><img src="img/skull.jpg" alt="skull"/></label>
         <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessPowSkull" value="blockSuccessPowSkull" v-model="success"/><label for="blockSuccessPowSkull"><img src="img/powskull.jpg" alt="powskull"/></label>
         <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessPush" value="blockSuccessPush" v-model="success"/><label for="blockSuccessPush"><img src="img/push.jpg" alt="push"/></label>
@@ -34,7 +39,7 @@ export default {
     components: {},
     data:function(){
         return {
-            dice: "1",
+            dice: null,
             success: ['blockSuccessStumble','blockSuccessDown']
         }
     },
@@ -57,6 +62,9 @@ export default {
             var theAction = new block(nbDice,nbSuccess, this.lonerSkill);
 
             this.$emit('action', theAction);
+        },
+        daus: function(val){
+            this.dice = val;
         }
     },
     created() {},
@@ -67,6 +75,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.bbfont {
+    font-family: 'dPoly Block Dice';
+}
+
+.selected {
+    border: 1px solid red;
+}
 
 </style>
