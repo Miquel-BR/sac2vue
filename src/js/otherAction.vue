@@ -1,7 +1,7 @@
 <template>
     <div class="actionCluster">
         <h2>Other Action</h2>
-        <teclat :numbers="numbers" @selected="action"></teclat>
+        <teclat :numbers="numbers" :color="'#FEF659'" @selected="action"></teclat>
     </div>
 </template>
 

@@ -1,10 +1,13 @@
 <template>
-    <div class="columns is-mobile">
-        <div class="column"
-             :style="{'background-color': increase_brightness(color, (idx +1) * 10)}"
+    <div class="columns is-mobile teclat">
+        <div class="column dau"
+             :class="{border: isSelectable, selected: (selected == n)}"
+             :style="(!isSelectable) ?
+             {'background-color': increase_brightness(color, (idx) * 10)} :
+                {'border-color': increase_brightness(color, (idx) * 10)}"
              v-for="(n, idx) in numbers"
-             @click="$emit('selected', n)"
-        >{{n}}+</div>
+             @click="click(n)"
+        ><span class="bbfont" :class="(n != 0) ? '' : 'no'">{{(n != 0) ? n : 'NO'}}</span>+</div>
     </div>
 </template>
 
@@ -13,14 +16,40 @@
 
 export default {
     name: "teclat",
-    props: ['numbers', 'color'],
+    props: {
+        numbers: {
+            type: Array,
+            required: true
+        },
+        color: {
+            type: String,
+            required: false,
+            default: '#333333'
+        },
+        isSelectable: {
+            type: Boolean,
+            required: false,
+            default: false
+        }
+    },
     components: {},
     data:function(){
-        return {}
+        return {
+            selected: 0,
+        }
     },
     computed: {},
     watch: {},
     methods: {
+        click: function(val){
+            if(!this.isSelectable) {
+                this.selected = val;
+                this.$emit('selected', val);
+            } else {
+                this.selected = val;
+                this.$emit('selected', val);
+            }
+        },
         increase_brightness: function(hex, percent){
             // strip the leading # if it's there
             hex = hex.replace(/^\s*#|\s*$/g, '');
@@ -48,7 +77,29 @@ export default {
 </script>
 
 <style lang="scss">
-    .column {
-        &.c0 {background-color: red;}
+
+
+    .teclat {
+        font-family: 'Gutcruncher';
+    }
+
+    .teclat span.bbfont{
+        font-family: 'dPoly Block Dice';
+
+        &.no {font-family: 'Gutcruncher';}
+    }
+
+    .dau {
+        &.selected {
+            border: 1px solid red;
+        }
+    }
+    .border {
+        border-width: 2px;
+        border-style: solid;
+
+        &.selected {
+            background-color: red;
+        }
     }
 </style>

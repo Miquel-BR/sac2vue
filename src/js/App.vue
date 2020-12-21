@@ -53,6 +53,7 @@
                     <catch :catch-skill="catchSkill" :loner-skill="lonerSkill" @action="addAction"></catch>
                 </div>
             </div>
+
             <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
 
 
@@ -163,6 +164,15 @@ import Injury from './injury.vue'
 
 
 html{
+    @font-face {
+        font-family: 'dPoly Block Dice';
+        src: url('../../font/dPolyBlockDice.woff2') format('woff2'),
+        url('../../font/dPolyBlockDice.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
     @include from($tablet) {
         //overflow-y: hidden !important;
     }
