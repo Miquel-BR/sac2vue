@@ -1,6 +1,6 @@
 <template>
     <div class="actionCluster">
-        <h2>Catch</h2>
+        <h2>Atrapar</h2>
         <teclat :numbers="numbers" :color="'#FF26A8'" @selected="action"></teclat>
     </div>
 </template>

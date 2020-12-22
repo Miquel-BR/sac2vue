@@ -1,31 +1,28 @@
 <template>
     <div class="actionCluster block" style="text-align:left;">
-        <h2>Blocks</h2>
-        <b>Dice</b>
-        <br/>
-        <br/>
         <div class="columns">
-            <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''">-&nbsp;<span class="bbfont">6&nbsp;6&nbsp;6</span></div>
-            <div class="column" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''">-&nbsp;<span class="bbfont">6&nbsp;6</span></div>
-            <div class="column" @click="daus(1)" :class="(dice == 1) ? 'selected' : ''"><span class="bbfont">6</span></div>
-            <div class="column" @click="daus(2)" :class="(dice == 2) ? 'selected' : ''"><span class="bbfont">6&nbsp;6</span></div>
-            <div class="column" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">6&nbsp;6&nbsp;6</span></div>
+            <div class="column is-half">
+                <b>Block</b>
+                <div class="columns daus">
+                    <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''" style="color:red;"><span class="bbfont">igh</span></div>
+                    <div class="column" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''" style="color:red;"><span class="bbfont">hi</span></div>
+                    <div class="column" @click="daus(1)" :class="(dice == 1) ? 'selected' : ''"><span class="bbfont">j</span></div>
+                    <div class="column" @click="daus(2)" :class="(dice == 2) ? 'selected' : ''"><span class="bbfont">hh</span></div>
+                    <div class="column" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">hji</span></div>
+                </div>
+            </div>
+            <div class="column">
+                <b>Success</b>
+                <div class="columns">
+                    <div class="column bbfont roll is-1" @click="pow('blockSuccessSkull')" :class="{selected: (success.includes('blockSuccessSkull'))}">h</div>
+                    <div class="column bbfont roll is-1" @click="pow('blockSuccessPowSkull')" :class="{selected: (success.includes('blockSuccessPowSkull'))}">k</div>
+                    <div class="column bbfont roll is-1" @click="pow('blockSuccessPush')" :class="{selected: (success.includes('blockSuccessPush'))}">g</div>
+                    <div class="column bbfont roll is-1" @click="pow('blockSuccessStumble')" :class="{selected: (success.includes('blockSuccessStumble'))}">j</div>
+                    <div class="column bbfont roll is-1" @click="pow('blockSuccessDown')" :class="{selected: (success.includes('blockSuccessDown'))}">i</div>
+                </div>
+            </div>
         </div>
-        <br/><br/>
-        <b>Success</b>
-        <br/><br/>
-        <div class="columns">
-            <div class="column bbfont">g</div>
-        </div>
-        <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessSkull" value="blockSuccessSkull" v-model="success"/><label for="blockSuccessSkull"><img src="img/skull.jpg" alt="skull"/></label>
-        <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessPowSkull" value="blockSuccessPowSkull" v-model="success"/><label for="blockSuccessPowSkull"><img src="img/powskull.jpg" alt="powskull"/></label>
-        <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessPush" value="blockSuccessPush" v-model="success"/><label for="blockSuccessPush"><img src="img/push.jpg" alt="push"/></label>
-        <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessStumble" value="blockSuccessStumble" v-model="success"/><label for="blockSuccessStumble"><img src="img/stumbles.jpg" alt="stumbles"/></label>
-        <input type="checkbox" class="successDice" name="blockSuccess" id="blockSuccessDown" value="blockSuccessDown" v-model="success"/><label for="blockSuccessDown"><img src="img/pow.jpg" alt="pow"/></label>
-
-        <br/>
-        <br/>
-        <input type="button" value="add" class="add" @click="addAction('block')" />
+        <button class="button" @click="addAction('block')">Add</button>
     </div>
 </template>
 
@@ -40,7 +37,8 @@ export default {
     data:function(){
         return {
             dice: null,
-            success: ['blockSuccessStumble','blockSuccessDown']
+            success: ['blockSuccessStumble','blockSuccessDown'],
+            powSelected: [],
         }
     },
     computed: {},
@@ -65,6 +63,14 @@ export default {
         },
         daus: function(val){
             this.dice = val;
+        },
+        pow: function(act){
+            if(this.success.includes(act)){
+                let idx = this.success.indexOf(act)
+                this.success.splice(idx, 1);
+            } else {
+                this.success.push(act);
+            }
         }
     },
     created() {},
@@ -75,13 +81,23 @@ export default {
 }
 </script>
 
-<style>
-.bbfont {
-    font-family: 'dPoly Block Dice';
-}
+<style lang="scss">
 
-.selected {
-    border: 1px solid red;
-}
+.block {
+    .bbfont {
+        font-family: 'dPoly Block Dice';
 
+        &.roll {font-size: 4em;}
+    }
+
+    .daus {
+        font-size: 2em;
+        line-height: 2.1em;
+        text-align: center;
+    }
+
+    .selected {
+        color: dodgerblue !important;
+    }
+}
 </style>

@@ -81,25 +81,29 @@ export default {
 
     .teclat {
         font-family: 'Gutcruncher';
-    }
 
-    .teclat span.bbfont{
-        font-family: 'dPoly Block Dice';
+        .dau {
+            text-align: center;
+            font-size: 2em;
+            &.selected {
+                //color:red;
+            }
+        }
+        .border {
+            border-width: 2px;
+            border-style: solid;
 
-        &.no {font-family: 'Gutcruncher';}
-    }
+            &.sselected {
+               // background-color: red;
+            }
+        }
 
-    .dau {
-        &.selected {
-            border: 1px solid red;
+        span.bbfont{
+            font-family: 'dPoly Block Dice';
+
+            &.no {font-family: 'Gutcruncher';}
         }
     }
-    .border {
-        border-width: 2px;
-        border-style: solid;
 
-        &.selected {
-            background-color: red;
-        }
-    }
+
 </style>

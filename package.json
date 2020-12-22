@@ -41,6 +41,7 @@
     "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
+    "@crow1796/vue-bulma-tabs": "^1.0.8",
     "bulma": "^0.8.0",
     "vue": "^2.6.11"
   }

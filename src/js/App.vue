@@ -39,33 +39,53 @@
     </section>
     <section class="section">
         <div class="container">
-            <div class="columns is-mobile">
-                <div class="column">
-                    <dodge :loner-skill="lonerSkill" :dodge-skill="dodgeSkill" @action="addAction"></dodge>
-                </div>
-                <div class="column">
-                    <pickup :loner-skill="lonerSkill" :surehand-skill="surehandSkill" @action="addAction"></pickup>
-                </div>
-                <div class="column">
-                    <gfi :lonner-skill="lonerSkill" :surefeet-skill="surefeetSkill" @action="addAction"></gfi>
-                </div>
-                <div class="column">
-                    <catch :catch-skill="catchSkill" :loner-skill="lonerSkill" @action="addAction"></catch>
+            <div class="columns is-multiline">
+                <div v-for="(seq, idx) in sequencia" class="column is-2">
+                    <div class="notification">
+                        <button class="delete" @click="deleteSeq(idx);"></button>
+                        <span v-html="seq.toString"></span>
+                    </div>
                 </div>
             </div>
-
-            <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
-
-
-            <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
-
-            <block :loner-skill="lonerSkill" @action="addAction"></block>
-
-            <armor-break @action="addAction"></armor-break>
-
-            <injury @action="addAction"></injury>
         </div>
     </section>
+        <Tabs>
+            <Tab name="Tab 1" :selected="true">
+                <div class="columns is-mobile">
+                    <div class="column">
+                        <dodge :loner-skill="lonerSkill" :dodge-skill="dodgeSkill" @action="addAction"></dodge>
+                    </div>
+                    <div class="column">
+                        <pickup :loner-skill="lonerSkill" :surehand-skill="surehandSkill" @action="addAction"></pickup>
+                    </div>
+                    <div class="column">
+                        <gfi :lonner-skill="lonerSkill" :surefeet-skill="surefeetSkill" @action="addAction"></gfi>
+                    </div>
+                    <div class="column">
+                        <catch :catch-skill="catchSkill" :loner-skill="lonerSkill" @action="addAction"></catch>
+                    </div>
+                </div>
+            </Tab>
+            <Tab name="Pases">
+                <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
+            </Tab>
+            <Tab name="Block">
+                <block :loner-skill="lonerSkill" @action="addAction"></block>
+            </Tab>
+            <Tab name="Mal">
+                <div class="columns">
+                    <div class="column">
+                <armor-break @action="addAction"></armor-break>
+                    </div>
+                    <div class="column">
+                <injury @action="addAction"></injury>
+                </div>
+                </div>
+            </Tab>
+            <Tab name="Other">
+                <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
+            </Tab>
+        </Tabs>
     </div>
 
 <!--            <div style="clear:both; height: 60px;"></div>
@@ -105,6 +125,8 @@ import Block from './block.vue'
 import ArmorBreak from './armorBreak.vue'
 import Injury from './injury.vue'
 
+import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
+
     export default {
         name: 'dice',
         components: {
@@ -116,7 +138,9 @@ import Injury from './injury.vue'
             OtherAction,
             Block,
             ArmorBreak,
-            Injury
+            Injury,
+            Tabs,
+            Tab
         },
         data:function(){
             return {
@@ -145,6 +169,13 @@ import Injury from './injury.vue'
             },
             cleanSequence: function(){
                 this.full = new fullSequence();
+                this.sequencia = [];
+                this.result = this.full.getProba();
+            },
+            deleteSeq: function(idx){
+                this.sequencia.splice(idx, 1);
+                this.full.removeAction(idx);
+                this.result = this.full.getProba();
             }
         },
         created() {
@@ -179,6 +210,11 @@ html{
     scroll-behavior: smooth;
 
     body {background-color: $back_peu;}
+
+    h2 {
+        font-family: sans-serif;
+        font-size: 1em;
+    }
 }
 
 </style>

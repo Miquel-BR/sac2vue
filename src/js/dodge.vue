@@ -1,6 +1,6 @@
 <template>
-    <div class="actionCluster container">
-        <h2>Dodges</h2>
+    <div class="actionCluster container dodge">
+        <h2>Esquivar</h2>
         <teclat :numbers="numbers" :color="'#0CFFC2'" @selected="action"></teclat>
     </div>
 </template>
@@ -38,5 +38,4 @@ export default {
 </script>
 
 <style>
-
 </style>

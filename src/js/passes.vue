@@ -42,12 +42,10 @@ export default {
                 {
                     name: 'Pro',
                     model: 'interceptionWithPro',
-                    selected: false
                 },
                 {
                     name: 'Catch',
                     model: 'interceptionWithCatch',
-                    selected: false
                 }
             ],
         }
@@ -78,6 +76,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

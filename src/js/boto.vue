@@ -59,12 +59,12 @@ export default {
         &.no {font-family: 'Gutcruncher';}
     }
     .border {
-        border-width: 2px;
-        border-style: solid;
-        border-color: #1D71B8;
+        //border-width: 2px;
+        //border-style: solid;
+        //border-color: #1D71B8;
 
         &.selected {
-            background-color: red;
+            color: red;
         }
     }
 </style>

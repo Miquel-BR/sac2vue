@@ -1,30 +1,44 @@
 <template>
     <div class="actionCluster injury" style="text-align:left;">
         <h2>Injury Roll</h2>
-        <input class="" type="checkbox" value="" name="injuryStun" v-model="injuryStun" id="injuryStun" />
-        <label class="injuryLabel" for="injuryStun" checked="checked">stun</label>
-        <input class="" type="checkbox" value="" name="injuryKO" id="injuryKO" v-model="injuryKO"/>
-        <label class="injuryLabel" for="injuryKO" checked="checked">KO</label>
-        <input class="" type="checkbox" value="" name="injuryCas" id="injuryCas" v-model="injuryCas" />
-        <label class="injuryLabel" for="injuryCas" checked="checked">CAS</label>
-        <br/><br/>
-        <input type="button" value="add" class="add" @click="addAction('injury')" />
+        <boto :options="options"
+              @injuryStun="stun"
+              @injuryKO="ko"
+              @injuryCas="cas"></boto>
+        <button class="button" @click="addAction('injury')">Add</button>
     </div>
 </template>
 
 <script>
 
 import {injury} from "./actions";
+import Boto from "./boto.vue"
 
 export default {
     name: "injury",
     props: [],
-    components: {},
+    components: {
+        Boto
+    },
     data:function(){
         return {
             injuryStun: false,
             injuryKO:false,
-            injuryCas:false
+            injuryCas:false,
+            options: [
+                {
+                    name: 'Stun',
+                    model: 'injuryStun',
+                },
+                {
+                    name: 'KO',
+                    model: 'injuryKO',
+                },
+                {
+                    name: 'CAS',
+                    model: 'injuryCas',
+                }
+            ],
         }
     },
     computed: {},
@@ -33,6 +47,15 @@ export default {
         addAction: function(action){
             var theAction = new injury(this.injuryStun, this.injuryKO, this.injuryCas);
             this.$emit('action', theAction);
+        },
+        stun: function(val){
+            this.injuryStun = val;
+        },
+        ko: function(val){
+            this.injuryKO = val;
+        },
+        cas: function(val){
+            this.injuryCas = val;
         }
     },
     created() {},

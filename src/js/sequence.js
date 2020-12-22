@@ -19,6 +19,10 @@ export default function fullSequence()
 
     }
 
+    this.getActions=function(){
+        return this.sequence;
+    },
+
     this.addActions=function(arr)
     {
         arr.forEach(function(action, idx, ar){
