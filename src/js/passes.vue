@@ -1,20 +1,28 @@
 <template>
     <div class="actionCluster">
         <div class="columns">
-            <div class="column is-one-fifth">Interception</div>
-            <div class="column">
-                <teclat :is-selectable="true" :numbers="numbersInter" :color="'#FFCCCC'" @selected="interception"></teclat>
+            <div class="column is-three-fifths">
+                <div class="columns">
+                    <div class="column is-one-fifth">Interception</div>
+                    <div class="column">
+                        <teclat :is-selectable="true" :numbers="numbersInter" :color="'#FFCCCC'" @selected="interceptionVal = $event"></teclat>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-two-fifths">
+                <div v-if="interceptionVal != 0" class="columns">
+                    <div class="column is-one-fifth">Skills</div>
+                    <div class="column">
+                        <boto :options="options" @interceptionWithPro="interceptionWithPro = $event" @interceptionWithCatch="interceptionWithCatch = $event"></boto>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="columns">
-            <div class="column is-one-fifth">Skills</div>
-            <div class="column">
-                <boto :options="options" @interceptionWithPro="skillsPro" @interceptionWithCatch="skillsCatch"></boto>
+            <div class="column is-three-fifths">
+        <teclat :numbers="numbers" :color="'#CC32FF'" @selected="action"></teclat>
             </div>
         </div>
-
-        <h2>Passes</h2>
-        <teclat :numbers="numbers" :color="'#CC32FF'" @selected="action"></teclat>
     </div>
 </template>
 
@@ -58,15 +66,6 @@ export default {
                 this.interceptionVal, this.interceptionWithPro, this.interceptionWithCatch );
             this.$emit('action', theAction);
         },
-        interception: function(val){
-            this.interceptionVal = val;
-        },
-        skillsPro: function(val){
-            this.interceptionWithPro = val;
-        },
-        skillsCatch: function(val){
-            this.interceptionWithCatch = val;
-        }
     },
     created() {},
     destroyed() {},

@@ -1,43 +1,31 @@
 <template>
 
     <div class="container">
-    <section class="section">
         <div class="container">
-            <div class="tile is-ancestor">
-                <div class="tile is-vertical is-6">
-                    <div class="tile is-parent">
-                        <article class="tile is-child">
-                            <h2>Player</h2>
-                            Name: <input type="text" id="playerName" class="playerName" name="playerName" value=""/>
-                            <input type="button" value="Change player" class="changePlayer" onclick="changePlayer()" /><br/>
-                            Skills:
-                            <input type="checkbox" value="" id="dodgeSkill" v-model="dodgeSkill"/><label for="dodgeSkill">Dodge</label>
-                            <input type="checkbox" value="" id="surehandSkill" v-model="surehandSkill"/><label for="surehandSkill">Sure hands</label>
-                            <input type="checkbox" value="" id="surefeetSkill" v-model="surefeetSkill"/><label for="surefeetSkill">Sure feet</label>
-                            <input type="checkbox" value="" id="passSkill" v-model="passSkill"/><label for="passSkill">Pass</label>
-                            <input type="checkbox" value="" id="catchSkill" v-model="catchSkill"/><label for="catchSkill">Catch</label>
-                            <input type="checkbox" value="" id="proSkill" v-model="proSkill"/><label for="proSkill">Pro *</label>
-
-                            <input type="checkbox" value="" id="lonerSkill" v-model="lonerSkill"/><label for="lonerSkill">Loner</label>
-                        </article>
-                    </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <h2>Player Skills</h2>
+                    <boto :options="playerOptions"
+                          @dodgeSkill="dodgeSkill = $event"
+                          @surehandSkill="surehandSkill = $event"
+                          @surefeetSkill="surefeetSkill = $event"
+                          @passSkill="passSkill = $event"
+                          @catchSkill="catchSkill = $event"
+                          @proSkill="proSkill = $event"
+                          @lonerSkill="lonerSkill = $event"></boto>
                 </div>
-                <div class="tile is-parent">
-                    <article class="tile is-child">
-                        <div v-if="result">
-                            <h2>Success percent Without team reroll</h2>
-                            <div id="probaNoReroll" >{{result.noReRoll}}%</div>
+                <div class="column">
+                    <div v-if="result">
+                        <h2>Success percent Without team reroll</h2>
+                        <div id="probaNoReroll" >{{result.noReRoll}}%</div>
 
-                            <h2>Success percent With a team reroll</h2>
-                            <div id="probaYesReroll" >{{result.reRoll}}%</div>
-                        </div>
-                        <input type="button" @click="cleanSequence" class="reset" value="reset"/>
-                    </article>
+                        <h2>Success percent With a team reroll</h2>
+                        <div id="probaYesReroll" >{{result.reRoll}}%</div>
+                    </div>
+                    <input type="button" @click="cleanSequence" class="reset" value="reset"/>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="section">
         <div class="container">
             <div class="columns is-multiline">
                 <div v-for="(seq, idx) in sequencia" class="column is-2">
@@ -48,7 +36,6 @@
                 </div>
             </div>
         </div>
-    </section>
         <Tabs>
             <Tab name="Tab 1" :selected="true">
                 <div class="columns is-mobile">
@@ -124,6 +111,7 @@ import OtherAction from './otherAction.vue'
 import Block from './block.vue'
 import ArmorBreak from './armorBreak.vue'
 import Injury from './injury.vue'
+import Boto from './boto.vue'
 
 import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
 
@@ -139,6 +127,7 @@ import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
             Block,
             ArmorBreak,
             Injury,
+            Boto,
             Tabs,
             Tab
         },
@@ -154,6 +143,36 @@ import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
                 sequencia: [],
                 full: null,
                 result: null,
+                playerOptions: [
+                    {
+                        name: 'Esquiva',
+                        model: 'dodgeSkill',
+                    },
+                    {
+                        name: 'Manos Seguras',
+                        model: 'surehandSkill',
+                    },
+                    {
+                        name: 'Pies Firmes',
+                        model: 'surefeetSkill',
+                    },
+                    {
+                        name: 'Pase Seguro',
+                        model: 'passSkill',
+                    },
+                    {
+                        name: 'Recoger',
+                        model: 'catchSkill',
+                    },
+                    {
+                        name: 'Pro',
+                        model: 'proSkill',
+                    },
+                    {
+                        name: 'Solitario',
+                        model: 'lonerSkill',
+                    }
+                ],
             }
         },
         props: [],

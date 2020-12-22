@@ -1,10 +1,8 @@
 <template>
     <div class="columns is-mobile teclat">
         <div class="column dau"
-             :class="{border: isSelectable, selected: (selected == n)}"
-             :style="(!isSelectable) ?
-             {'background-color': increase_brightness(color, (idx) * 10)} :
-                {'border-color': increase_brightness(color, (idx) * 10)}"
+             :class="{selected: (isSelectable && selected == n)}"
+             :style="[(!isSelectable) ? {'background-color': increase_brightness(color, (idx) * 10)} : {}]"
              v-for="(n, idx) in numbers"
              @click="click(n)"
         ><span class="bbfont" :class="(n != 0) ? '' : 'no'">{{(n != 0) ? n : 'NO'}}</span></div>
@@ -77,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import './../scss/mystyles.scss';
 
     .teclat {
         font-family: 'Gutcruncher';
@@ -86,7 +84,7 @@ export default {
             text-align: center;
             font-size: 2em;
             &.selected {
-                //color:red;
+                color:$selected;
             }
         }
         .border {

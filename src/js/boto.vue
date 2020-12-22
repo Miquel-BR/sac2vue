@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import './../scss/mystyles.scss';
 
     .teclat {
         font-family: 'Gutcruncher';
@@ -64,7 +64,7 @@ export default {
         //border-color: #1D71B8;
 
         &.selected {
-            color: red;
+            color: $selected;
         }
     }
 </style>

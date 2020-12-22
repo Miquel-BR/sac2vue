@@ -1,7 +1,7 @@
 <template>
     <div class="actionCluster block" style="text-align:left;">
         <div class="columns">
-            <div class="column is-half">
+            <div class="column is-three-fifths">
                 <b>Block</b>
                 <div class="columns daus">
                     <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''" style="color:red;"><span class="bbfont">igh</span></div>
@@ -11,7 +11,7 @@
                     <div class="column" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">hji</span></div>
                 </div>
             </div>
-            <div class="column">
+            <div class="column is-two-fifths">
                 <b>Success</b>
                 <div class="columns">
                     <div class="column bbfont roll is-1" @click="pow('blockSuccessSkull')" :class="{selected: (success.includes('blockSuccessSkull'))}">h</div>
@@ -82,6 +82,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import './../scss/mystyles.scss';
 
 .block {
     .bbfont {
@@ -91,13 +92,13 @@ export default {
     }
 
     .daus {
-        font-size: 2em;
+        font-size: 3em;
         line-height: 2.1em;
         text-align: center;
     }
 
     .selected {
-        color: dodgerblue !important;
+        color: $selected !important;
     }
 }
 </style>

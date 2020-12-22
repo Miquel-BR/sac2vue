@@ -83,6 +83,7 @@ $colores: #4B92C3,
 #B38557;
 
 
+$selected: dodgerblue;
 
 
 
@@ -97,12 +98,12 @@ $colores: #4B92C3,
 
 @import "../../node_modules/bulma/sass/elements/button.sass";
 @import "../../node_modules/bulma/sass/elements/container.sass";
-@import "../../node_modules/bulma/sass/grid/tiles.sass";
+//@import "../../node_modules/bulma/sass/grid/tiles.sass";
 //@import "../../node_modules/bulma/sass/elements/form.sass";
 //@import "../../node_modules/bulma/sass/elements/title.sass";
 //@import "../../node_modules/bulma/sass/elements/icon.sass";
 //@import "../../node_modules/bulma/sass/layout/hero.sass";
-@import "../../node_modules/bulma/sass/layout/section.sass";
+//@import "../../node_modules/bulma/sass/layout/section.sass";
 @import "../../node_modules/bulma/sass/grid/columns.sass";
 @import "../../node_modules/bulma/sass/components/tabs.sass";
 //@import "../../node_modules/bulma/sass/elements/progress.sass";
