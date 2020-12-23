@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-mobile boto">
+    <div class="columns boto is-mobile is-multiline">
         <div class="column border"
              :class="{selected: (selected.includes(opt.model))}"
              v-for="opt in options"
@@ -17,7 +17,16 @@ export default {
         options: {
             type: Array,
             required: true
-        }
+        },
+        isAlone: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        clearSelected: {
+            type: Boolean,
+            required: false
+        },
     },
     components: {},
     data:function(){
@@ -26,17 +35,24 @@ export default {
         }
     },
     computed: {},
-    watch: {},
+    watch: {
+        clearSelected: function(newVal, oldVal){
+            this.selected = new Array();
+        }
+    },
     methods: {
         click: function(opt){
             console.log("CLICK", opt);
-            if(this.selected.includes(opt.model)){
-                let idx = this.selected.indexOf(opt.model)
-                this.selected.splice(idx, 1);
-                this.$emit(opt.model, false);
-            } else {
+            if(!this.selected.includes(opt.model)){
+                if(this.isAlone){
+                    this.selected = new Array();
+                }
                 this.selected.push(opt.model);
                 this.$emit(opt.model, true);
+            } else {
+                let idx = this.selected.indexOf(opt.model);
+                this.selected.splice(idx, 1);
+                this.$emit(opt.model, false);
             }
         }
     },

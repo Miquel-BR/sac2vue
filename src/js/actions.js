@@ -9,8 +9,8 @@ export function playerAction(x, isLoner)
     this.isLoner = isLoner;
     this.probaNoReroll = (7-x)/6;
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
-    let tLoner = (isLoner)?' loner':'';
-    this.toString = 'Action '+x+'+'+tLoner;
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
+    this.toString = 'Acción '+x+'+'+tLoner;
 }
 
 export function dodge(x, hasSkill, isLoner)
@@ -19,9 +19,9 @@ export function dodge(x, hasSkill, isLoner)
     this.isLoner = isLoner;
     this.probaNoReroll = (7-x)/6;
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
-    let wDodge = (hasSkill)?'with dodge skill':'';
-    let tLoner = (isLoner)?' loner':'';
-    this.toString = 'Dodge '+x+'+ '+wDodge+tLoner;
+    let wDodge = (hasSkill)?'<span class="hab">esquiva </span>':'';
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
+    this.toString = 'Esquiva '+x+'+ '+wDodge+tLoner;
 }
 
 export function pass(x, hasSkill, isLoner, interception, interceptionWithPro, interceptionWithCatch)
@@ -45,12 +45,12 @@ export function pass(x, hasSkill, isLoner, interception, interceptionWithPro, in
     this.interceptionOdd = interceptionOdd;
     this.probaNoReroll = (7-x)/6;
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
-    let wSkill = (hasSkill)?'with pass skill':'';
-    let tLoner = (isLoner)?' loner':'';
+    let wSkill = (hasSkill)?'<span class="hab">pase seguro </span>':'';
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
 
     let rInterceptionOdd =  Math.round(interceptionOdd*10000)/100;;
-    let tInterceptionOdd = ( interceptionOdd!=1 )? ' <span class="negative">(interception:'+rInterceptionOdd+'%)</span>':'';
-    this.toString = 'Pass '+x+'+ '+wSkill+tLoner+tInterceptionOdd;
+    let tInterceptionOdd = ( interceptionOdd!=1 )? ' <span class="negative">(intercepción:'+rInterceptionOdd+'%)</span>':'';
+    this.toString = 'Pase '+x+'+ '+wSkill+tLoner+tInterceptionOdd;
 }
 
 export function catching(x, hasSkill, isLoner)
@@ -59,9 +59,9 @@ export function catching(x, hasSkill, isLoner)
     this.isLoner = isLoner;
     this.probaNoReroll = (7-x)/6;
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
-    let wSkill = (hasSkill)?'with catch skill':'';
-    let tLoner = (isLoner)?' loner':'';
-    this.toString = 'Catch '+x+'+ '+wSkill+tLoner;
+    let wSkill = (hasSkill)?'<span class="hab">atrapar </span>':'';
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
+    this.toString = 'Atrapar '+x+'+ '+wSkill+tLoner;
 }
 export function pickup(x, hasSkill, isLoner)
 {
@@ -69,9 +69,9 @@ export function pickup(x, hasSkill, isLoner)
     this.isLoner = isLoner;
     this.probaNoReroll = (7-x)/6;
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
-    let wSkill = (hasSkill)?'with sure hand':'';
-    let tLoner = (isLoner)?' loner':'';
-    this.toString = 'Pick up '+x+'+ '+wSkill+tLoner;
+    let wSkill = (hasSkill)?'<span class="hab">recoger </span>':'';
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
+    this.toString = 'Recoger '+x+'+ '+wSkill+tLoner;
 }
 
 
@@ -82,9 +82,9 @@ export function gfi(x, hasSurefeet, isLoner)
     this.isLoner = isLoner;
     this.probaNoReroll = (7-x)/6;
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
-    let wDodge = (hasSurefeet)?'with sure feet':'';
-    let tLoner = (isLoner)?' loner':'';
-    this.toString = 'Go For It '+x+'+ '+wDodge+tLoner;
+    let wDodge = (hasSurefeet)?'<span class="hab">pies firmes </span>':'';
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
+    this.toString = 'AP '+x+'+ '+wDodge+tLoner;
 }
 
 export function block(nbDice, nbSuccess, isLoner)
@@ -110,8 +110,8 @@ export function block(nbDice, nbSuccess, isLoner)
             break;
     }
     this.probaYesReroll = (1-this.probaNoReroll)*this.probaNoReroll;
-    let tLoner = (isLoner)?' loner':'';
-    this.toString = 'block '+nbDice+'D ('+nbSuccess+' success)'+tLoner;
+    let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
+    this.toString = 'Block '+nbDice+'D ('+nbSuccess+' success)'+tLoner;
 }
 
 export function armorbreak(armorValue)
@@ -153,7 +153,7 @@ export function injury(stunChecked, koChecked, casChecked)
     if( stunChecked )
     {
         proba+= 21/36;
-        injuryText += 'stun ';
+        injuryText += 'aturdido ';
     }
     if( koChecked )
     {
@@ -163,7 +163,7 @@ export function injury(stunChecked, koChecked, casChecked)
     if( casChecked )
     {
         proba+= 6/36;
-        injuryText += 'cas ';
+        injuryText += 'lesión ';
     }
     this.cannotUseReroll=true;
     this.probaNoReroll=proba;

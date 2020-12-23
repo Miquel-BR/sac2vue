@@ -27,7 +27,7 @@ export default {
             injuryCas:false,
             options: [
                 {
-                    name: 'Stun',
+                    name: 'Aturdido',
                     model: 'injuryStun',
                 },
                 {
@@ -35,7 +35,7 @@ export default {
                     model: 'injuryKO',
                 },
                 {
-                    name: 'CAS',
+                    name: 'Lesión',
                     model: 'injuryCas',
                 }
             ],

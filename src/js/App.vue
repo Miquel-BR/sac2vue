@@ -1,6 +1,6 @@
 <template>
 
-    <div class="container">
+    <section class="section">
         <div class="container">
             <div class="columns">
                 <div class="column is-half">
@@ -27,8 +27,8 @@
             </div>
         </div>
         <div class="container">
-            <div class="columns is-multiline">
-                <div v-for="(seq, idx) in sequencia" class="column is-2">
+            <div class="columns is-multiline is-mobile">
+                <div v-for="(seq, idx) in sequencia" class="column is-6-mobile is-2">
                     <div class="notification">
                         <button class="delete" @click="deleteSeq(idx);"></button>
                         <span v-html="seq.toString"></span>
@@ -36,44 +36,44 @@
                 </div>
             </div>
         </div>
-        <Tabs>
-            <Tab name="Tab 1" :selected="true">
-                <div class="columns is-mobile">
-                    <div class="column">
-                        <dodge :loner-skill="lonerSkill" :dodge-skill="dodgeSkill" @action="addAction"></dodge>
+        <div class="container">
+            <Tabs>
+                <Tab name="Tab 1" :selected="true">
+                    <div class="columns">
+                        <div class="column">
+                            <boto :options="actionOptions"
+                                  :clearSelected="clearActionSelected"
+                                  :is-alone="true"
+                                  @esquiva="setAction = 'esquiva'"
+                                  @recoger="setAction = 'recoger'"
+                                  @ap="setAction = 'ap'"
+                                  @atrapar="setAction = 'atrapar'"></boto>
+                            <teclat :numbers="numbersComp" :color="'#BBBBBB'" @selected="action"></teclat>
+                        </div>
                     </div>
-                    <div class="column">
-                        <pickup :loner-skill="lonerSkill" :surehand-skill="surehandSkill" @action="addAction"></pickup>
+                </Tab>
+                <Tab name="Pases">
+                    <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
+                </Tab>
+                <Tab name="Block">
+                    <block :loner-skill="lonerSkill" @action="addAction"></block>
+                </Tab>
+                <Tab name="Mal">
+                    <div class="columns">
+                        <div class="column">
+                    <armor-break @action="addAction"></armor-break>
+                        </div>
+                        <div class="column">
+                    <injury @action="addAction"></injury>
                     </div>
-                    <div class="column">
-                        <gfi :lonner-skill="lonerSkill" :surefeet-skill="surefeetSkill" @action="addAction"></gfi>
                     </div>
-                    <div class="column">
-                        <catch :catch-skill="catchSkill" :loner-skill="lonerSkill" @action="addAction"></catch>
-                    </div>
-                </div>
-            </Tab>
-            <Tab name="Pases">
-                <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
-            </Tab>
-            <Tab name="Block">
-                <block :loner-skill="lonerSkill" @action="addAction"></block>
-            </Tab>
-            <Tab name="Mal">
-                <div class="columns">
-                    <div class="column">
-                <armor-break @action="addAction"></armor-break>
-                    </div>
-                    <div class="column">
-                <injury @action="addAction"></injury>
-                </div>
-                </div>
-            </Tab>
-            <Tab name="Other">
-                <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
-            </Tab>
-        </Tabs>
-    </div>
+                </Tab>
+                <Tab name="Other">
+                    <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
+                </Tab>
+            </Tabs>
+        </div>
+    </section>
 
 <!--            <div style="clear:both; height: 60px;"></div>
 
@@ -112,8 +112,10 @@ import Block from './block.vue'
 import ArmorBreak from './armorBreak.vue'
 import Injury from './injury.vue'
 import Boto from './boto.vue'
+import Teclat from './teclat.vue'
 
 import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
+import {catching, dodge, gfi, pickup, playerAction} from "./actions";
 
     export default {
         name: 'dice',
@@ -128,6 +130,7 @@ import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
             ArmorBreak,
             Injury,
             Boto,
+            Teclat,
             Tabs,
             Tab
         },
@@ -143,6 +146,9 @@ import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
                 sequencia: [],
                 full: null,
                 result: null,
+                numbers: [2, 3, 4, 5, 6 ],
+                setAction: '',
+                clearActionSelected: true,
                 playerOptions: [
                     {
                         name: 'Esquiva',
@@ -173,12 +179,51 @@ import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
                         model: 'lonerSkill',
                     }
                 ],
+                actionOptions: [
+                    {
+                        name: 'Esquiva',
+                        model: 'esquiva',
+                    },
+                    {
+                        name: 'Recoger',
+                        model: 'recoger',
+                    },
+                    {
+                        name: 'A Por ellos',
+                        model: 'ap',
+                    },
+                    {
+                        name: 'Atrapar',
+                        model: 'atrapar',
+                    },
+                ]
             }
+
         },
         props: [],
-        computed: {},
+        computed: {
+            numbersComp: function(){
+                return (this.setAction == 'ap') ? [2, 3] : this.numbers;
+            }
+        },
         watch: {},
         methods: {
+            action: function(val){
+                console.log("ACTION VAL", val);
+                if (this.setAction == 'esquiva'){
+                    this.addAction(new dodge(val, this.dodgeSkill, this.lonerSkill));
+                } else if (this.setAction == 'recoger'){
+                    this.addAction(new pickup(val, this.surehandSkill, this.lonerSkill ));
+                } else if (this.setAction == 'ap'){
+                    this.addAction(new gfi(val, this.surefeetSkill, this.lonerSkill));
+                } else if (this.setAction == 'atrapar'){
+                    this.addAction(new catching(val, this.catchSkill, this.lonerSkill ));
+                } else {
+                    this.addAction(new playerAction(val, this.lonerSkill))
+                }
+                this.setAction= '';
+                this.clearActionSelected = !this.clearActionSelected;
+            },
             addAction: function(action){
                 console.log("ACTION", action);
                 this.sequencia.push(action);
@@ -228,12 +273,20 @@ html{
     }
     scroll-behavior: smooth;
 
-    body {background-color: $back_peu;}
+    body {
+        background-color: $back_peu;
+        font-family: sans-serif;
+        font-size: 12px;
+
+        .tabs {font-size: 12px;}
+    }
 
     h2 {
         font-family: sans-serif;
         font-size: 1em;
     }
+
+
 }
 
 </style>
