@@ -65,9 +65,12 @@ $modal-z: 1100;
 $modal-content-width: 90%;
 $modal-background-background-color: rgba(255, 255, 255, 0.80);
 
+
+$selected: #3298dc;
+
 //TABS
-$tabs-link-active-border-bottom-color: #C60C30;
-$tabs-border-bottom-width: 1px;
+$tabs-link-active-border-bottom-color: $selected;
+$tabs-border-bottom-width: 2px;
 
 $colores: #4B92C3,
 #FFCE3A,
@@ -83,7 +86,7 @@ $colores: #4B92C3,
 #B38557;
 
 
-$selected: dodgerblue;
+
 
 
 

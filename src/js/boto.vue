@@ -1,10 +1,12 @@
 <template>
-    <div class="columns boto is-mobile is-multiline">
-        <div class="column border"
-             :class="{selected: (selected.includes(opt.model))}"
+    <div class="boto">
+        <div class="buttons has-addons">
+        <button class="button is-small"
+             :class="{'is-info': (selected.includes(opt.model))}"
              v-for="opt in options"
              @click="click(opt)"
-        >{{opt.name}}</div>
+        >{{opt.name}}</button>
+        </div>
     </div>
 </template>
 
@@ -58,29 +60,30 @@ export default {
     },
     created() {},
     destroyed() {},
-    mounted: function () {}
+    mounted: function () {
+        let self = this;
+        this.options.forEach(function(e,idx){
+            if(e.hasOwnProperty('selected')){
+                console.log("SELECTED", e);
+                self.selected.push(e.model);
+                self.$emit(e.model, true);
+            }
+        });
+    }
 }
 </script>
 
 <style lang="scss">
-@import './../scss/mystyles.scss';
+//@import './../scss/mystyles.scss';
 
-    .teclat {
-        font-family: 'Gutcruncher';
+.buttons.has-addons .button{
+    &:focus {
+        outline: none;
+        box-shadow: none !important;
+        border-color:rgb(208, 209, 205);
     }
-
-    .teclat span.bbfont{
-        font-family: 'dPoly Block Dice';
-
-        &.no {font-family: 'Gutcruncher';}
+    &.is-info:focus {
+        border-color:#3298dc;
     }
-    .border {
-        //border-width: 2px;
-        //border-style: solid;
-        //border-color: #1D71B8;
-
-        &.selected {
-            color: $selected;
-        }
-    }
+}
 </style>

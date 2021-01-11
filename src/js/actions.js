@@ -21,7 +21,7 @@ export function dodge(x, hasSkill, isLoner)
     this.probaYesReroll = ((x-1)/6)*((7-x)/6);
     let wDodge = (hasSkill)?'<span class="hab">esquiva </span>':'';
     let tLoner = (isLoner)?'<span class="hab">solitario</span>':'';
-    this.toString = 'Esquiva '+x+'+ '+wDodge+tLoner;
+    this.toString = 'Esquiva <span class="num">'+x+'+</span> '+wDodge+tLoner;
 }
 
 export function pass(x, hasSkill, isLoner, interception, interceptionWithPro, interceptionWithCatch)

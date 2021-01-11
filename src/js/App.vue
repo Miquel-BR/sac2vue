@@ -3,8 +3,25 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-half">
-                    <h2>Player Skills</h2>
+                <div class="column  is-half">
+                    <div class="columns is-mobile" v-if="result">
+                        <div class="column">
+                            <h2>Probabilitat sense reroll</h2>
+                            <div id="probaNoReroll" >{{result.noReRoll}}%</div>
+                        </div>
+                        <div class="column">
+                            <h2>Probabilitat amb reroll</h2>
+                            <div id="probaYesReroll" >{{result.reRoll}}%</div>
+                        </div>
+                        <div class="column">
+                            <button class="button is-small is-danger is-outlined" @click="cleanSequence">Reset</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="column">
+                    <h2 class="playerSkill" @click="showPlayerSkills = !showPlayerSkills">Player Skills <span class="arrow-down"></span></h2>
+
                     <boto :options="playerOptions"
                           @dodgeSkill="dodgeSkill = $event"
                           @surehandSkill="surehandSkill = $event"
@@ -12,24 +29,17 @@
                           @passSkill="passSkill = $event"
                           @catchSkill="catchSkill = $event"
                           @proSkill="proSkill = $event"
-                          @lonerSkill="lonerSkill = $event"></boto>
+                          @lonerSkill="lonerSkill = $event"
+                          v-if="showPlayerSkills"
+                    ></boto>
                 </div>
-                <div class="column">
-                    <div v-if="result">
-                        <h2>Success percent Without team reroll</h2>
-                        <div id="probaNoReroll" >{{result.noReRoll}}%</div>
 
-                        <h2>Success percent With a team reroll</h2>
-                        <div id="probaYesReroll" >{{result.reRoll}}%</div>
-                    </div>
-                    <input type="button" @click="cleanSequence" class="reset" value="reset"/>
-                </div>
             </div>
         </div>
-        <div class="container">
-            <div class="columns is-multiline is-mobile">
-                <div v-for="(seq, idx) in sequencia" class="column is-6-mobile is-2">
-                    <div class="notification">
+        <div class="container sequencia">
+            <div class="columns is-multiline is-mobile is-gapless">
+                <div v-for="(seq, idx) in sequencia" class="column is-one-third-mobile is-2-tablet is-2-desktop">
+                    <div class="notification" @click="clickSeq(idx)" style="margin: 0.5rem;xpadding: 0;">
                         <button class="delete" @click="deleteSeq(idx);"></button>
                         <span v-html="seq.toString"></span>
                     </div>
@@ -38,19 +48,16 @@
         </div>
         <div class="container">
             <Tabs>
-                <Tab name="Tab 1" :selected="true">
-                    <div class="columns">
-                        <div class="column">
-                            <boto :options="actionOptions"
-                                  :clearSelected="clearActionSelected"
-                                  :is-alone="true"
-                                  @esquiva="setAction = 'esquiva'"
-                                  @recoger="setAction = 'recoger'"
-                                  @ap="setAction = 'ap'"
-                                  @atrapar="setAction = 'atrapar'"></boto>
-                            <teclat :numbers="numbersComp" :color="'#BBBBBB'" @selected="action"></teclat>
-                        </div>
-                    </div>
+                <Tab name="Acciones" :selected="true">
+                    <boto :options="actionOptions"
+                          :clearSelected="clearActionSelected"
+                          :is-alone="true"
+                          @esquiva="setAction = 'esquiva'"
+                          @recoger="setAction = 'recoger'"
+                          @ap="setAction = 'ap'"
+                          @atrapar="setAction = 'atrapar'"
+                          style="margin-bottom: 0.75rem;"></boto>
+                    <teclat :numbers="numbersComp" :color="'#EEEEEE'" @selected="action"></teclat>
                 </Tab>
                 <Tab name="Pases">
                     <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
@@ -58,14 +65,14 @@
                 <Tab name="Block">
                     <block :loner-skill="lonerSkill" @action="addAction"></block>
                 </Tab>
-                <Tab name="Mal">
+                <Tab name="Injury">
                     <div class="columns">
                         <div class="column">
-                    <armor-break @action="addAction"></armor-break>
+                            <armor-break @action="addAction"></armor-break>
                         </div>
                         <div class="column">
-                    <injury @action="addAction"></injury>
-                    </div>
+                            <injury @action="addAction"></injury>
+                        </div>
                     </div>
                 </Tab>
                 <Tab name="Other">
@@ -149,6 +156,7 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                 numbers: [2, 3, 4, 5, 6 ],
                 setAction: '',
                 clearActionSelected: true,
+                showPlayerSkills: true,
                 playerOptions: [
                     {
                         name: 'Esquiva',
@@ -167,7 +175,7 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                         model: 'passSkill',
                     },
                     {
-                        name: 'Recoger',
+                        name: 'Atrapar',
                         model: 'catchSkill',
                     },
                     {
@@ -183,6 +191,7 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                     {
                         name: 'Esquiva',
                         model: 'esquiva',
+                        selected: true
                     },
                     {
                         name: 'Recoger',
@@ -221,13 +230,12 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                 } else {
                     this.addAction(new playerAction(val, this.lonerSkill))
                 }
-                this.setAction= '';
-                this.clearActionSelected = !this.clearActionSelected;
+                //this.setAction= '';
+                //this.clearActionSelected = !this.clearActionSelected;
             },
             addAction: function(action){
                 console.log("ACTION", action);
                 this.sequencia.push(action);
-
                 this.full.addAction(action);
                 this.result = this.full.getProba();
             },
@@ -240,6 +248,13 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                 this.sequencia.splice(idx, 1);
                 this.full.removeAction(idx);
                 this.result = this.full.getProba();
+            },
+            clickSeq: function(idx){
+                console.log("CLICK SEQ", idx);
+                let seq = new fullSequence();
+                let sp = this.sequencia.slice(0, idx + 1);
+                seq.addActions(sp);
+                console.log("PROB", seq.getProba());
             }
         },
         created() {
@@ -286,7 +301,38 @@ html{
         font-size: 1em;
     }
 
+    .sequencia .notification{
+        margin: 0.5rem;
+        padding-left: 0.5rem;
+        font-size: 0.60rem;
+        white-space: nowrap;
 
+        @include from($tablet) {
+            padding-left: 1.5rem;
+        }
+
+        .num {
+            font-size: 0.80rem;
+            font-weight: bold;
+        }
+
+    }
+
+    .playerSkill {
+        position: relative;
+        cursor: pointer;
+
+        .arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-top: 3px solid #000;
+            position: absolute;
+            margin-left:2px;
+            top:2px;
+        }
+    }
 }
 
 </style>

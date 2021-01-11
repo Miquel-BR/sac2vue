@@ -21,13 +21,11 @@ export default function fullSequence()
 
     this.getActions=function(){
         return this.sequence;
-    },
+    }
 
     this.addActions=function(arr)
     {
-        arr.forEach(function(action, idx, ar){
-            this.addAction(action);
-        });
+        this.sequence = arr;
     }
 
     //get odd for an action teamRerollLeft = true to get the result with a reroll

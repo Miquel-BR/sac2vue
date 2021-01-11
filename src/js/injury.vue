@@ -1,11 +1,17 @@
 <template>
     <div class="actionCluster injury" style="text-align:left;">
         <h2>Injury Roll</h2>
-        <boto :options="options"
-              @injuryStun="stun"
-              @injuryKO="ko"
-              @injuryCas="cas"></boto>
-        <button class="button" @click="addAction('injury')">Add</button>
+        <div class="columns is-mobile">
+            <div class="column is-three-fifths">
+                <boto :options="options"
+                      @injuryStun="stun"
+                      @injuryKO="ko"
+                      @injuryCas="cas"></boto>
+            </div>
+            <div class="column">
+                <button class="button is-small" @click="addAction('injury')">Add</button>
+            </div>
+        </div>
     </div>
 </template>
 

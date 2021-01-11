@@ -86,6 +86,11 @@ export default {
             &.selected {
                 color:$selected;
             }
+
+            &:hover {
+                cursor:pointer;
+                span.bbfont {color:$selected;}
+            }
         }
         .border {
             border-width: 2px;
@@ -100,6 +105,10 @@ export default {
             font-family: 'dPoly Block Dice';
 
             &.no {font-family: 'Gutcruncher';}
+
+            &:hover{
+                color: $selected;
+            }
         }
     }
 

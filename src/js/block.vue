@@ -1,28 +1,31 @@
 <template>
     <div class="actionCluster block" style="text-align:left;">
         <div class="columns">
-            <div class="column is-three-fifths">
+            <div class="column is-half">
                 <b>Block</b>
                 <div class="columns daus">
-                    <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''" style="color:red;"><span class="bbfont">igh</span></div>
-                    <div class="column" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''" style="color:red;"><span class="bbfont">hi</span></div>
+                    <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''" style="color:red;height: 26px;"><span class="bbfont">igh</span></div>
+                    <div class="column" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''" style="color:red;height: 26px;"><span class="bbfont">hi</span></div>
                     <div class="column" @click="daus(1)" :class="(dice == 1) ? 'selected' : ''"><span class="bbfont">j</span></div>
                     <div class="column" @click="daus(2)" :class="(dice == 2) ? 'selected' : ''"><span class="bbfont">hh</span></div>
                     <div class="column" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">hji</span></div>
                 </div>
             </div>
-            <div class="column is-two-fifths">
+            <div class="column">
                 <b>Success</b>
-                <div class="columns">
-                    <div class="column bbfont roll is-1" @click="pow('blockSuccessSkull')" :class="{selected: (success.includes('blockSuccessSkull'))}">h</div>
-                    <div class="column bbfont roll is-1" @click="pow('blockSuccessPowSkull')" :class="{selected: (success.includes('blockSuccessPowSkull'))}">k</div>
-                    <div class="column bbfont roll is-1" @click="pow('blockSuccessPush')" :class="{selected: (success.includes('blockSuccessPush'))}">g</div>
-                    <div class="column bbfont roll is-1" @click="pow('blockSuccessStumble')" :class="{selected: (success.includes('blockSuccessStumble'))}">j</div>
-                    <div class="column bbfont roll is-1" @click="pow('blockSuccessDown')" :class="{selected: (success.includes('blockSuccessDown'))}">i</div>
+                <div class="" style="text-align: center;">
+                    <span class=" bbfont roll" @click="pow('blockSuccessSkull')" :class="{selected: (success.includes('blockSuccessSkull'))}">h</span>
+                    <span class=" bbfont roll" @click="pow('blockSuccessPowSkull')" :class="{selected: (success.includes('blockSuccessPowSkull'))}">k</span>
+                    <span class=" bbfont roll" @click="pow('blockSuccessPush')" :class="{selected: (success.includes('blockSuccessPush'))}">g</span>
+                    <span class=" bbfont roll" @click="pow('blockSuccessStumble')" :class="{selected: (success.includes('blockSuccessStumble'))}">j</span>
+                    <span class=" bbfont roll" @click="pow('blockSuccessDown')" :class="{selected: (success.includes('blockSuccessDown'))}">i</span>
                 </div>
             </div>
+            <div class="column" style="text-align: center;">
+                <button class="button is-small" @click="addAction('block')">Add</button>
+            </div>
         </div>
-        <button class="button" @click="addAction('block')">Add</button>
+
     </div>
 </template>
 
@@ -87,18 +90,35 @@ export default {
 .block {
     .bbfont {
         font-family: 'dPoly Block Dice';
+        cursor: pointer;
 
-        &.roll {font-size: 4em;}
+        &.roll {
+            font-size: 4em;
+            text-align: center;
+        }
     }
 
     .daus {
         font-size: 3em;
-        line-height: 2.1em;
+        line-height: 0.8em;
+
         text-align: center;
+
+        @include from($tablet) {
+            line-height: 2.1em;
+        }
     }
 
     .selected {
         color: $selected !important;
+    }
+
+    .button {
+        margin-top: 0;
+
+        @include from($tablet) {
+            margin-top: 2rem;
+        }
     }
 }
 </style>
