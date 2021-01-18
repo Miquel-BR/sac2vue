@@ -2,6 +2,18 @@
 
     <section class="section">
         <div class="container">
+            <div class="columns is-mobile">
+                <div class="column is-one-quarter">
+                    <a href="#">
+                        <img class="is-hidden-desktop" style="width: 100%;"src="img/irrpb.png"/>
+                        <img class="is-hidden-touch" style="width: 100%;"src="https://www.irregularesplanb.com/images/logo.png"/></a>
+                </div>
+                <div class="column">
+                    <div class="titol"><span>BLOOD BOWL</span> PROBABILITY <span>CALCULATOR</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
             <div class="columns">
                 <div class="column  is-half">
                     <div class="columns is-mobile" v-if="result">
@@ -77,9 +89,9 @@
                         </div>
                     </div>
                 </Tab>
-                <Tab name="Altre">
-                    <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
-                </Tab>
+<!--                <Tab name="Altre">-->
+<!--                    <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>-->
+<!--                </Tab>-->
             </Tabs>
         </div>
     </section>
@@ -344,6 +356,18 @@ html{
         font-size: 12px;
 
         .tabs {font-size: 12px;}
+    }
+
+    .titol {
+        font-family: 'Gutcruncher';
+        text-align: center;
+        font-size: 6.5vw;
+
+        @include from($tablet) {
+            font-size: 2.6vw;
+        }
+
+        span {color: $irrpb;}
     }
 
     h2 {
