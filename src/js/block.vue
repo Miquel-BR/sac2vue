@@ -1,19 +1,19 @@
 <template>
-    <div class="actionCluster block" style="text-align:left;">
-        <div class="columns">
+    <div class="actionCluster block">
+        <div class="columns is-gapless">
             <div class="column is-half">
                 <b>Block</b>
-                <div class="columns daus">
-                    <div class="column" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''" style="color:red;height: 26px;"><span class="bbfont">igh</span></div>
-                    <div class="column" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''" style="color:red;height: 26px;"><span class="bbfont">hi</span></div>
+                <div class="columns daus is-multiline is-gapless is-mobile">
+                    <div class="column is-half-mobile" @click="daus(-3)" :class="(dice == -3) ? 'selected' : ''" style="color:red;"><span class="bbfont">igh</span></div>
+                    <div class="column is-half-mobile" @click="daus(-2)" :class="(dice == -2) ? 'selected' : ''" style="color:red;"><span class="bbfont">hi</span></div>
                     <div class="column" @click="daus(1)" :class="(dice == 1) ? 'selected' : ''"><span class="bbfont">j</span></div>
                     <div class="column" @click="daus(2)" :class="(dice == 2) ? 'selected' : ''"><span class="bbfont">hh</span></div>
-                    <div class="column" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">hji</span></div>
+                    <div class="column is-half-mobile" @click="daus(3)" :class="(dice == 3) ? 'selected' : ''"><span class="bbfont">hji</span></div>
                 </div>
             </div>
             <div class="column">
                 <b>Success</b>
-                <div class="" style="text-align: center;">
+                <div class="success">
                     <span class=" bbfont roll" @click="pow('blockSuccessSkull')" :class="{selected: (success.includes('blockSuccessSkull'))}">h</span>
                     <span class=" bbfont roll" @click="pow('blockSuccessPowSkull')" :class="{selected: (success.includes('blockSuccessPowSkull'))}">k</span>
                     <span class=" bbfont roll" @click="pow('blockSuccessPush')" :class="{selected: (success.includes('blockSuccessPush'))}">g</span>
@@ -88,6 +88,7 @@ export default {
 @import './../scss/mystyles.scss';
 
 .block {
+
     .bbfont {
         font-family: 'dPoly Block Dice';
         cursor: pointer;
@@ -95,6 +96,17 @@ export default {
         &.roll {
             font-size: 4em;
             text-align: center;
+
+            @include from($tablet) {
+                xtext-align: left;
+            }
+        }
+    }
+
+    .success {
+        text-align: center;
+        @include from($tablet) {
+            text-align: left;
         }
     }
 
@@ -106,6 +118,24 @@ export default {
 
         @include from($tablet) {
             line-height: 2.1em;
+            xtext-align: left;
+            padding-right: 40px;
+        }
+
+        &.columns.is-gapless {
+            @include mobile {
+                margin-top: 0.5rem;
+            }
+            > .column:first-child{
+                @include mobile {
+                    margin-bottom: 0.75rem;
+                }
+            }
+            &:last-child {
+               @include mobile {
+                    margin-bottom: 0.5rem;
+                }
+            }
         }
     }
 

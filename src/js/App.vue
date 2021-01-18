@@ -14,13 +14,16 @@
                             <div id="probaYesReroll" >{{result.reRoll}}%</div>
                         </div>
                         <div class="column">
+                            <div class="buttons">
                             <button class="button is-small is-danger is-outlined" @click="cleanSequence">Reset</button>
+                            <button class="button is-small xis-info viewprecent" :class="{'selected': (pintaSeq != null)}" @click="finsSeq(sequencia.length - 2);">%</button>
+                            </div>
                         </div>
                     </div>
 
                 </div>
                 <div class="column">
-                    <h2 class="playerSkill" @click="showPlayerSkills = !showPlayerSkills">Player Skills <span class="arrow-down"></span></h2>
+                    <h2 class="playerSkill" @click="showPlayerSkills = !showPlayerSkills">Habilitats <span class="arrow-down"></span></h2>
 
                     <boto :options="playerOptions"
                           @dodgeSkill="dodgeSkill = $event"
@@ -37,18 +40,17 @@
             </div>
         </div>
         <div class="container sequencia">
-            <div class="columns is-multiline is-mobile is-gapless">
-                <div v-for="(seq, idx) in sequencia" class="column is-one-third-mobile is-2-tablet is-2-desktop">
-                    <div class="notification" @click="clickSeq(idx)" style="margin: 0.5rem;xpadding: 0;">
-                        <button class="delete" @click="deleteSeq(idx);"></button>
-                        <span v-html="seq.toString"></span>
-                    </div>
-                </div>
-            </div>
+            <sequencia :sequencia="txtSeq"
+                       @delete="deleteSeq"
+                       @clickar="clickSeq"
+                       @fins="finsSeq"
+                       :show="showSeq"
+                       :pinta="pintaSeq"
+            ></sequencia>
         </div>
         <div class="container">
             <Tabs>
-                <Tab name="Acciones" :selected="true">
+                <Tab name="Accions" :selected="true">
                     <boto :options="actionOptions"
                           :clearSelected="clearActionSelected"
                           :is-alone="true"
@@ -59,13 +61,13 @@
                           style="margin-bottom: 0.75rem;"></boto>
                     <teclat :numbers="numbersComp" :color="'#EEEEEE'" @selected="action"></teclat>
                 </Tab>
-                <Tab name="Pases">
+                <Tab name="Pasada">
                     <passes :loner-skill="lonerSkill" :pass-skill="passSkill" @action="addAction"></passes>
                 </Tab>
                 <Tab name="Block">
                     <block :loner-skill="lonerSkill" @action="addAction"></block>
                 </Tab>
-                <Tab name="Injury">
+                <Tab name="Lesió">
                     <div class="columns">
                         <div class="column">
                             <armor-break @action="addAction"></armor-break>
@@ -75,7 +77,7 @@
                         </div>
                     </div>
                 </Tab>
-                <Tab name="Other">
+                <Tab name="Altre">
                     <other-action :loner-skill="lonerSkill" @action="addAction"></other-action>
                 </Tab>
             </Tabs>
@@ -120,6 +122,7 @@ import ArmorBreak from './armorBreak.vue'
 import Injury from './injury.vue'
 import Boto from './boto.vue'
 import Teclat from './teclat.vue'
+import Sequencia from './sequencia.vue'
 
 import { Tabs, Tab } from '@crow1796/vue-bulma-tabs'
 import {catching, dodge, gfi, pickup, playerAction} from "./actions";
@@ -139,7 +142,8 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
             Boto,
             Teclat,
             Tabs,
-            Tab
+            Tab,
+            Sequencia
         },
         data:function(){
             return {
@@ -157,25 +161,27 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                 setAction: '',
                 clearActionSelected: true,
                 showPlayerSkills: true,
+                showSeq: [],
+                pintaSeq: null,
                 playerOptions: [
                     {
-                        name: 'Esquiva',
+                        name: 'Esquivar',
                         model: 'dodgeSkill',
                     },
                     {
-                        name: 'Manos Seguras',
+                        name: 'Mans Segures',
                         model: 'surehandSkill',
                     },
                     {
-                        name: 'Pies Firmes',
+                        name: 'Peus Ferms',
                         model: 'surefeetSkill',
                     },
                     {
-                        name: 'Pase Seguro',
+                        name: 'Pasada Segura',
                         model: 'passSkill',
                     },
                     {
-                        name: 'Atrapar',
+                        name: 'Agafar',
                         model: 'catchSkill',
                     },
                     {
@@ -183,26 +189,26 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                         model: 'proSkill',
                     },
                     {
-                        name: 'Solitario',
+                        name: 'Solitari',
                         model: 'lonerSkill',
                     }
                 ],
                 actionOptions: [
                     {
-                        name: 'Esquiva',
+                        name: 'Esquivar',
                         model: 'esquiva',
                         selected: true
                     },
                     {
-                        name: 'Recoger',
+                        name: 'Recollir',
                         model: 'recoger',
                     },
                     {
-                        name: 'A Por ellos',
+                        name: 'A Per ells',
                         model: 'ap',
                     },
                     {
-                        name: 'Atrapar',
+                        name: 'Agafar',
                         model: 'atrapar',
                     },
                 ]
@@ -213,6 +219,13 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
         computed: {
             numbersComp: function(){
                 return (this.setAction == 'ap') ? [2, 3] : this.numbers;
+            },
+            txtSeq: function(){
+                let retorn = []
+                this.sequencia.forEach(function(e, idx){
+                    retorn.push(e.toString);
+                });
+                return retorn;
             }
         },
         watch: {},
@@ -243,18 +256,55 @@ import {catching, dodge, gfi, pickup, playerAction} from "./actions";
                 this.full = new fullSequence();
                 this.sequencia = [];
                 this.result = this.full.getProba();
+                this.showSeq = [];
+                this.pintaSeq = null;
             },
             deleteSeq: function(idx){
                 this.sequencia.splice(idx, 1);
                 this.full.removeAction(idx);
                 this.result = this.full.getProba();
+                //this.showSeq = [];
+                //this.pintaSeq = null;
             },
             clickSeq: function(idx){
                 console.log("CLICK SEQ", idx);
-                let seq = new fullSequence();
-                let sp = this.sequencia.slice(0, idx + 1);
-                seq.addActions(sp);
-                console.log("PROB", seq.getProba());
+                this.pintaSeq = null;
+                let idxs = this.showSeq.map(function(ele){
+                    return ele.idx
+                });
+                if (!idxs.includes(idx)) {
+                    let seq = new fullSequence();
+                    let sp = this.sequencia.slice(idx, idx + 1);
+                    seq.addAction(sp[0]);
+                    let proba = seq.getProba();
+                    console.log("PROB", proba);
+                    this.showSeq = [];
+                    this.showSeq.push({idx: idx, proba: proba});
+                } else {
+                    this.showSeq = [];
+                }
+            },
+            finsSeq: function(idx){
+                console.log("FINS SEQ", idx);
+                let idxs = this.showSeq.map(function(ele){
+                    return ele.idx
+                });
+                console.log(idxs);
+                if (!idxs.includes(idx)) {
+                    this.pintaSeq = idx;
+                    this.showSeq = [];
+                    for (let f = 0; f <= idx; f++){
+                        let seq = new fullSequence();
+                        let sp = this.sequencia.slice(0, f + 1);
+                        seq.addActions(sp);
+                        let proba = seq.getProba();
+                        console.log("PROB", proba);
+                        this.showSeq.push({idx: f, proba: proba});
+                    }
+                } else {
+                    this.showSeq = [];
+                    this.pintaSeq = null;
+                }
             }
         },
         created() {
@@ -301,23 +351,6 @@ html{
         font-size: 1em;
     }
 
-    .sequencia .notification{
-        margin: 0.5rem;
-        padding-left: 0.5rem;
-        font-size: 0.60rem;
-        white-space: nowrap;
-
-        @include from($tablet) {
-            padding-left: 1.5rem;
-        }
-
-        .num {
-            font-size: 0.80rem;
-            font-weight: bold;
-        }
-
-    }
-
     .playerSkill {
         position: relative;
         cursor: pointer;
@@ -331,6 +364,37 @@ html{
             position: absolute;
             margin-left:2px;
             top:2px;
+        }
+    }
+}
+
+.button.viewprecent {
+    border-color: $selected;
+    color: $selected;
+
+    &.selected,
+    &:hover {
+        background-color: $selected;
+        color: white;
+    }
+    &:focus {
+        outline: none;
+        box-shadow: none !important;
+        border-color:$selected;
+    }
+    &.is-info:focus {
+        border-color:#3298dc;
+    }
+}
+
+
+.button.is-outlined {
+    &:hover,
+    &:focus,
+    &:active,
+    &:visited {
+        &::after {
+            border-color: transparent transparent #fff #fff !important;
         }
     }
 }

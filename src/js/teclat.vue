@@ -2,7 +2,7 @@
     <div class="columns is-mobile teclat">
         <div class="column dau"
              :class="{selected: (isSelectable && selected == n)}"
-             :style="[(!isSelectable) ? {'background-color': increase_brightness(color, (idx) * 10)} : {}]"
+             :style="[(!isSelectable) ? {'background-color': increase_brightness(color, (idx) * 6)} : {}]"
              v-for="(n, idx) in numbers"
              @click="click(n)"
         ><span class="bbfont" :class="(n != 0) ? '' : 'no'">{{(n != 0) ? n : 'NO'}}</span></div>
